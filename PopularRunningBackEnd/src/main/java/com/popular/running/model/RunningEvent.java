@@ -13,7 +13,7 @@ import javax.persistence.Table;
  * @author scastros
  */
 @Entity
-@Table( name = "RUNNINGEVENT" )
+@Table( name = "RUNNINGEVENT")
 public class RunningEvent implements Serializable
 {
     /**

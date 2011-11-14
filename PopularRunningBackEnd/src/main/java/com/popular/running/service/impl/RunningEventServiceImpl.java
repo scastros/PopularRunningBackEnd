@@ -17,7 +17,7 @@ import com.popular.running.service.BaseService;
 @SuppressWarnings("rawtypes")
 @Transactional
 @Service( "runningEventService" )
-public abstract class RunningEventServiceImpl extends BaseServiceImpl implements BaseService
+public class RunningEventServiceImpl extends BaseServiceImpl implements BaseService
 {
     @Autowired
     private RunningEventDAO runningEventDao;
@@ -34,19 +34,22 @@ public abstract class RunningEventServiceImpl extends BaseServiceImpl implements
         return runningEventDao.findAll();
     }
 
-    public void save( RunningEvent runningEvent )
+    @Override
+    public void save( Object runningEvent )
     {
-        runningEventDao.save( runningEvent );
+        runningEventDao.save( (RunningEvent)runningEvent );
     }
 
-    public void merge( RunningEvent runningEvent )
+    @Override
+    public void merge( Object runningEvent )
     {
-        runningEventDao.merge( runningEvent );
+        runningEventDao.merge( (RunningEvent)runningEvent );
     }
 
-    public void remove( RunningEvent runningEvent )
+    @Override
+    public void remove( Object runningEvent )
     {
-        runningEventDao.remove( runningEvent );
+        runningEventDao.remove( (RunningEvent)runningEvent );
     }
 
     @Override

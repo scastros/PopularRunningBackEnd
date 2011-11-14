@@ -17,7 +17,7 @@ import com.popular.running.service.BaseService;
 @SuppressWarnings("rawtypes")
 @Transactional
 @Service( "distanceService" )
-public abstract class DistanceServiceImpl extends BaseServiceImpl implements BaseService
+public class DistanceServiceImpl extends BaseServiceImpl implements BaseService
 {
     @Autowired
     private DistanceDAO distanceDao;
@@ -34,19 +34,22 @@ public abstract class DistanceServiceImpl extends BaseServiceImpl implements Bas
         return distanceDao.findAll();
     }
 
-    public void save( Distance distance )
+    @Override
+    public void save( Object distance )
     {
-    	distanceDao.save( distance );
+    	distanceDao.save( (Distance)distance );
     }
 
-    public void merge( Distance distance )
+    @Override
+    public void merge( Object distance )
     {
-    	distanceDao.merge( distance );
+    	distanceDao.merge( (Distance)distance );
     }
 
-    public void remove( Distance distance )
+    @Override
+    public void remove( Object distance )
     {
-    	distanceDao.remove( distance );
+    	distanceDao.remove( (Distance)distance );
     }
 
     @Override

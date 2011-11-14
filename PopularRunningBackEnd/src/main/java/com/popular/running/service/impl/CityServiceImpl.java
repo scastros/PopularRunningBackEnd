@@ -17,7 +17,7 @@ import com.popular.running.service.BaseService;
 @SuppressWarnings("rawtypes")
 @Transactional
 @Service( "cityService" )
-public abstract class CityServiceImpl extends BaseServiceImpl implements BaseService
+public class CityServiceImpl extends BaseServiceImpl implements BaseService
 {
     @Autowired
     private CityDAO cityDao;
@@ -34,19 +34,22 @@ public abstract class CityServiceImpl extends BaseServiceImpl implements BaseSer
         return cityDao.findAll();
     }
 
-    public void save( City city )
+    @Override
+    public void save( Object city )
     {
-    	cityDao.save( city );
+    	cityDao.save( (City)city );
     }
 
-    public void merge( City city )
+    @Override
+    public void merge( Object city )
     {
-    	cityDao.merge( city );
+    	cityDao.merge( (City)city );
     }
 
-    public void remove( City city )
+    @Override
+    public void remove( Object city )
     {
-    	cityDao.remove( city );
+    	cityDao.remove( (City)city );
     }
 
     @Override

@@ -55,11 +55,33 @@
             <constructor-arg ref="entityManagerFactory" />
     </bean>
     
+    <bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean> 
+    
     <!--**** Application components ****-->
-    <bean id="cityService" class="com.popular.running.service.impl.CityServiceImpl" />
-    <bean id="distanceService" class="com.popular.running.service.impl.DistanceServiceImpl" />
-    <bean id="stateService" class="com.popular.running.service.impl.StateServiceImpl" />
-    <bean id="runningEventService" class="com.popular.running.service.impl.RunningEventServiceImpl" />
+    <bean id="cityService" class="com.popular.running.service.impl.CityServiceImpl">
+    	<property name="hibernateTemplate">
+			<ref bean="hibernateTemplate" />
+		</property>
+	</bean>
+    <bean id="distanceService" class="com.popular.running.service.impl.DistanceServiceImpl">
+    	<property name="hibernateTemplate">
+			<ref bean="hibernateTemplate" />
+		</property>
+	</bean>
+    <bean id="stateService" class="com.popular.running.service.impl.StateServiceImpl">
+    	<property name="hibernateTemplate">
+			<ref bean="hibernateTemplate" />
+		</property>
+	</bean>
+    <bean id="runningEventService" class="com.popular.running.service.impl.RunningEventServiceImpl">
+    	<property name="hibernateTemplate">
+			<ref bean="hibernateTemplate" />
+		</property>
+	</bean>
 
 <!--    <bean id="cityDao" class="com.popular.running.dao.impl.CityDAOImpl" />-->
 <!--    <bean id="distanceDao" class="com.popular.running.dao.impl.DistanceDAOImpl" />-->
@@ -71,7 +93,7 @@
             searchProcessor and PersistenceContext are filled in using
             annotations.
     -->
-    <bean id="baseDao" class="com.popular.running.dao.BaseDAO" />
+<!--    <bean id="baseDao" class="com.popular.running.dao.BaseDAO" />-->
 
     <!-- Hibernate Session Factory  -->
     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
@@ -81,7 +103,9 @@
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
-                <prop key="hibernate.hbm2ddl.auto">validate</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.connection.autocommit">true</prop>
             </props>
         </property>
 

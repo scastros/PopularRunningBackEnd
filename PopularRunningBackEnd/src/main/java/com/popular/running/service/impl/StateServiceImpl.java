@@ -17,7 +17,7 @@ import com.popular.running.service.BaseService;
 @SuppressWarnings("rawtypes")
 @Transactional
 @Service( "stateService" )
-public abstract class StateServiceImpl extends BaseServiceImpl implements BaseService
+public class StateServiceImpl extends BaseServiceImpl implements BaseService
 {
     @Autowired
     private StateDAO stateDao;
@@ -34,19 +34,22 @@ public abstract class StateServiceImpl extends BaseServiceImpl implements BaseSe
         return stateDao.findAll();
     }
 
-    public void save( State state )
+    @Override
+    public void save( Object state )
     {
-    	stateDao.save( state );
+    	stateDao.save( (State)state );
     }
 
-    public void merge( State state )
+    @Override
+    public void merge( Object state )
     {
-    	stateDao.merge( state );
+    	stateDao.merge( (State)state );
     }
 
-    public void remove( State state )
+    @Override
+    public void remove( Object state )
     {
-    	stateDao.remove( state );
+    	stateDao.remove( (State)state );
     }
 
     @Override

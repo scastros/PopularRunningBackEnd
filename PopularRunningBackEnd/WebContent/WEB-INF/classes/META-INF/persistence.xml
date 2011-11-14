@@ -1,8 +1,8 @@
 <persistence xmlns="http://java.sun.com/xml/ns/persistence" version="1.0">
     <persistence-unit name="PopularRunning" transaction-type="RESOURCE_LOCAL">
-       <class>com.popular.running.model.City</class>
-       <class>com.popular.running.model.Distance</class>
-       <class>com.popular.running.model.RunningEvent</class>
-       <class>com.popular.running.model.State</class>
+        <class>com.popular.running.model.City</class>
+       	<class>com.popular.running.model.Distance</class>
+       	<class>com.popular.running.model.RunningEvent</class>
+       	<class>com.popular.running.model.State</class>
     </persistence-unit>
 </persistence>

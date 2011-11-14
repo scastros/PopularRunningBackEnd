@@ -14,7 +14,7 @@ import javax.persistence.Table;
  * @author scastros
  */
 @Entity
-@Table( name = "STATE" )
+@Table( name = "STATE")
 public class State implements Serializable
 {
     /**
