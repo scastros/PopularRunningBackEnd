@@ -11,7 +11,13 @@ import org.springframework.stereotype.Repository;
 import com.googlecode.genericdao.dao.jpa.GenericDAOImpl;
 import com.googlecode.genericdao.search.jpa.JPASearchProcessor;
 
-
+/**
+ * Base class for DAO engine
+ * @author xe22663
+ *
+ * @param <T>
+ * @param <ID>
+ */
 @Repository
 public class BaseDAO<T, ID extends Serializable> extends GenericDAOImpl<T, ID> {
 	@Override
