@@ -15,6 +15,7 @@ import org.apache.wink.json4j.JSONArray;
 import org.apache.wink.json4j.JSONException;
 
 import com.popular.running.model.State;
+import com.popular.running.service.impl.StateServiceImpl;
 
 /**
  * A resource that provides access to 
@@ -25,26 +26,16 @@ public class StateResource {
 	
 	@Context UriInfo uriInfo;
 	
+	private static OperationsHolder _operations = OperationsHolder.getInstance();
+	private static StateServiceImpl _stateService = _operations.getStateService();
+	
     public StateResource() {
     }
     
-    /** Returns JSONArray with the States */
+    /** Returns array with the States */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONArray getStates() {
-    	
-    	JSONArray array = new JSONArray();
-        List<State> states = OperationsHolder.getInstance().getStateService().findAll();
-        
-        for (State state : states) {
-            UriBuilder ub = uriInfo.getAbsolutePathBuilder();
-            URI userUri = ub.path(state.getDescription()).build();
-            try {
-				array.put(userUri.toASCIIString());
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-        }
-        return array;
+    public List<State> getStates() {
+        return _stateService.findAll();
     }
 }

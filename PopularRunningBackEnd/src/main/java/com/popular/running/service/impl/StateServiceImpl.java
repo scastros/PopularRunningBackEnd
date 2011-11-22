@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.popular.running.dao.StateDAO;
@@ -16,6 +17,7 @@ import com.popular.running.service.BaseService;
  */
 @SuppressWarnings("rawtypes")
 @Transactional
+@TransactionConfiguration(defaultRollback=false)
 @Service( "stateService" )
 public class StateServiceImpl extends BaseServiceImpl implements BaseService
 {
