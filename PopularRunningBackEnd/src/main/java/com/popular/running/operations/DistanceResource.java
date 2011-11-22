@@ -12,38 +12,38 @@ import javax.ws.rs.core.UriInfo;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.popular.running.model.City;
-import com.popular.running.service.impl.CityServiceImpl;
+import com.popular.running.model.Distance;
+import com.popular.running.service.impl.DistanceServiceImpl;
 
 /**
  * A resource that provides access to 
- * Cities stored in Database
+ * Distances stored in Database
  */
-@Path(value="/PopularRunning/cities")
-public class CityResource {
+@Path(value="/PopularRunning/distances")
+public class DistanceResource {
 	
 	@Context UriInfo uriInfo;
 	
 	private static OperationsHolder _operations = OperationsHolder.getInstance();
-	private static CityServiceImpl _cityService = _operations.getCityService();
+	private static DistanceServiceImpl _distanceService = _operations.getDistanceService();
 	
-    public CityResource() {
+    public DistanceResource() {
     }
     
-    /** Returns array with the Cities */
+    /** Returns array with the Distances */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<City> getCities() {
-        return _cityService.findAll();
+    public List<Distance> getDistances() {
+        return _distanceService.findAll();
     }
     
-    /** Returns given id City */
+    /** Returns given id Distance */
     @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public City getCityById(@PathParam("id") String id) {
+    public Distance getDistanceById(@PathParam("id") String id) {
     	if (StringUtils.isNumeric(id))
-    		return _cityService.findById(Long.parseLong(id));
-        return new City();
+    		return _distanceService.findById(Long.parseLong(id));
+        return new Distance();
     }
 }

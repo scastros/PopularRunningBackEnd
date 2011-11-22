@@ -20,6 +20,7 @@ public class PopularRunningApplication extends Application {
 		classes.add(PopularRunning.class);
 		classes.add(StateResource.class);
 		classes.add(CityResource.class);
+		classes.add(DistanceResource.class);
 		return classes;
 	}
 

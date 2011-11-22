@@ -2,12 +2,15 @@ package com.popular.running.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -28,18 +31,30 @@ public class City implements Serializable
     @Id
     @GeneratedValue( strategy = GenerationType.AUTO )
     @Column( name = "ID" )
+    @Basic(optional = false)
+    @NotNull
     private long id;
 
     @Column( name = "STATE" )
+    @Basic(optional = false)
+    @NotNull    
     private long state;
 
     @Column( name = "DESCRIPTION" )
+    @NotNull
+    @Basic(optional = false)
+    @Size(min=1, max=255)
     private String description;
 
     public City()
     {
     }
 
+    /**
+     * Constructor
+     * @param state
+     * @param description
+     */
     public City( long state,
                  String description )
     {
