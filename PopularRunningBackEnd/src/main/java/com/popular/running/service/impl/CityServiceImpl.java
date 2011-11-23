@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.googlecode.genericdao.search.Search;
 import com.popular.running.dao.CityDAO;
 import com.popular.running.model.City;
 import com.popular.running.service.BaseService;
@@ -16,6 +18,7 @@ import com.popular.running.service.BaseService;
  */
 @SuppressWarnings("rawtypes")
 @Transactional
+@TransactionConfiguration(defaultRollback=false)
 @Service( "cityService" )
 public class CityServiceImpl extends BaseServiceImpl implements BaseService
 {
@@ -56,5 +59,22 @@ public class CityServiceImpl extends BaseServiceImpl implements BaseService
 	public void flush() {
     	cityDao.flush();
 	}
-
+    
+    /**
+     * This is a DAO method that returns all the cities with the given description.
+     * If any parameter is null, that parameter is ignored. So only non-null parameters are used in defining the search criteria.
+     */
+    @Override
+	public List<City> findByName(String name) {
+        return cityDao.search(new Search(City.class).addFilterILike("description", name));
+	}
+    
+    /**
+     * Returns Cities in given state
+     * @param stateId
+     * @return
+     */
+	public List<City> findCitiesInState(long stateId) {
+        return cityDao.search(new Search(City.class).addFilterEqual("state", stateId));
+	}    
 }

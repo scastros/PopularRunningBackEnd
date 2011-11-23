@@ -12,15 +12,27 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.introspect.JacksonAnnotationIntrospector;
 import org.codehaus.jackson.xc.JaxbAnnotationIntrospector;
 
+import com.popular.running.service.resources.CityResource;
+import com.popular.running.service.resources.DistanceResource;
+import com.popular.running.service.resources.RunningEventResource;
+import com.popular.running.service.resources.StateResource;
+
+/**
+ * Main PopularRunning Wink Application class
+ * Publish JSON machinery
+ * 
+ * @author scastros
+ *
+ */
 public class PopularRunningApplication extends Application {
 
 	@Override
 	public Set<Class<?>> getClasses() {
 		Set<Class<?>> classes = new HashSet<Class<?>>();
-		classes.add(PopularRunning.class);
 		classes.add(StateResource.class);
 		classes.add(CityResource.class);
 		classes.add(DistanceResource.class);
+		classes.add(RunningEventResource.class);
 		return classes;
 	}
 

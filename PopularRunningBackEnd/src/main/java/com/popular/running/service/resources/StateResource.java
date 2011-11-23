@@ -1,4 +1,4 @@
-package com.popular.running.operations;
+package com.popular.running.service.resources;
 
 import java.util.List;
 
@@ -13,6 +13,7 @@ import javax.ws.rs.core.UriInfo;
 import org.apache.commons.lang.StringUtils;
 
 import com.popular.running.model.State;
+import com.popular.running.operations.OperationsHolder;
 import com.popular.running.service.impl.StateServiceImpl;
 
 /**
@@ -46,5 +47,17 @@ public class StateResource {
     	if (StringUtils.isNumeric(id))
     		return _stateService.findById(Long.parseLong(id));
         return new State();
+    }
+    
+    @Path("name/{name}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    /**
+     * Returns given name State
+     * @param name
+     * @return State
+     */
+    public List<State> getStateByName(@PathParam("name") String name) {
+    	return _stateService.findByName(name);
     }
 }

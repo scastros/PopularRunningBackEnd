@@ -9,7 +9,8 @@ import com.popular.running.service.impl.RunningEventServiceImpl;
 import com.popular.running.service.impl.StateServiceImpl;
 
 /**
- * Operations Holder
+ * Operations Holder. 
+ * Holds instances for every entity service
  * 
  * @author scastros
  *
@@ -39,6 +40,10 @@ public class OperationsHolder {
         stateService = ( StateServiceImpl )applicationContext.getBean( "stateService" );
     }
 
+    /**
+     * Get Instance
+     * @return the Instance
+     */
 	public static OperationsHolder getInstance() {
 		return _instance;
 	}
@@ -57,6 +62,10 @@ public class OperationsHolder {
 
 	public StateServiceImpl getStateService() {
 		return stateService;
+	}
+	
+	public ApplicationContext getApplicationContext() {
+		return applicationContext;
 	}
 
 	private static OperationsHolder _instance = new OperationsHolder();

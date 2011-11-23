@@ -4,6 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
+ * Resolves and build full path for database file
  * 
  * @author scastros
  * 

@@ -1,11 +1,13 @@
 package com.popular.running;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.popular.running.model.RunningEvent;
+import com.popular.running.operations.OperationsHolder;
 import com.popular.running.service.impl.RunningEventServiceImpl;
 
 /**
@@ -53,14 +55,16 @@ public class RunningEventTest
     public static void main( String[] args )
     {
         // Load the application context
-        applicationContext = new ClassPathXmlApplicationContext( "classpath:applicationContext.xml" );
+    	applicationContext = OperationsHolder.getInstance().getApplicationContext();
+        //applicationContext = new ClassPathXmlApplicationContext( "classpath:applicationContext.xml" );
 
         // Load our customer service bean
-        runningEventService = ( RunningEventServiceImpl )applicationContext.getBean( "runningEventService" );
+        runningEventService = OperationsHolder.getInstance().getRunningEventService();
+        //runningEventService = ( RunningEventServiceImpl )applicationContext.getBean( "runningEventService" );
 
         // Test code
         showRunningEvents();
-        //addRunningEvent( "Michael", "Haines", "michael@javasrc.com", "funkey" );
+        addRunningEvent( new Date().getTime(), "Carrera Trofeo Akiles", "http://www.google.com/image.jpg", 3, 345, "Edición XII del Trofeo Akiles", "http://www.enrollment.com", "http://www.map.com", "http://www.elevation.com");
         showRunningEvents();
         shutdown();
     }

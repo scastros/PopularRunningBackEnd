@@ -8,6 +8,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
+ * Determines where in the disk is located the database file
  *
  * @author scastros
  */
@@ -17,17 +18,21 @@ public class HsqlDatabaseListener implements ServletContextListener {
 	private ServletContext context = null;
 	private Log log = LogFactory.getLog(HsqlDatabaseListener.class);
 
-    public void contextInitialized(ServletContextEvent event) {
+	/**
+	 * @param event
+	 */
+	public void contextInitialized(ServletContextEvent event) {
         context = event.getServletContext();
 
         String prefix = event.getServletContext().getRealPath("/");
 
         log.info("Database root " + prefix);
         HsqlDatabasePathResolver.getInstance(prefix);
-
-
     }
 
+	/**
+	 * @param event
+	 */
     public void contextDestroyed(ServletContextEvent event) {
         context = event.getServletContext();
 

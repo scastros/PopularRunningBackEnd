@@ -1,5 +1,6 @@
-package com.popular.running.operations;
+package com.popular.running.service.resources;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.GET;
@@ -13,6 +14,7 @@ import javax.ws.rs.core.UriInfo;
 import org.apache.commons.lang.StringUtils;
 
 import com.popular.running.model.City;
+import com.popular.running.operations.OperationsHolder;
 import com.popular.running.service.impl.CityServiceImpl;
 
 /**
@@ -30,20 +32,58 @@ public class CityResource {
     public CityResource() {
     }
     
-    /** Returns array with the Cities */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    /**
+     * Returns array with the Cities
+     * 
+     * @return cities
+     */
     public List<City> getCities() {
         return _cityService.findAll();
     }
     
-    /** Returns given id City */
     @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    /**
+     * Returns given id City
+     * 
+     * @param City id
+     * @return The City
+     */
     public City getCityById(@PathParam("id") String id) {
     	if (StringUtils.isNumeric(id))
     		return _cityService.findById(Long.parseLong(id));
         return new City();
     }
+    
+    @Path("state/{id}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    /**
+     * Returns Cities in given State id 
+     *
+     * @param id of the state
+     * @return The Cities
+     */
+    public List<City> getCitiesInState(@PathParam("id") String id) {
+    	if (StringUtils.isNumeric(id))
+    		return _cityService.findCitiesInState(Long.parseLong(id));
+        return new ArrayList<City>();
+    }
+    
+    @Path("name/{name}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    /**
+     * Returns Cities which name contains given name 
+     *
+     * @param id of the state
+     * @return The Cities
+     */
+    public List<City> getCitiesNameContains(@PathParam("name") String name) {
+   		return _cityService.findByName("%"+name+"%");
+    }    
+    
 }

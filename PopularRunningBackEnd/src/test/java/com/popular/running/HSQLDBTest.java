@@ -37,6 +37,7 @@ public class HSQLDBTest
 		}
 	}
 
+	@SuppressWarnings({ "unused" })
 	public static void shutdown()
 	{
 		try
