@@ -62,10 +62,12 @@ public class CityServiceImpl extends BaseServiceImpl implements BaseService
     
     /**
      * This is a DAO method that returns all the cities with the given description.
-     * If any parameter is null, that parameter is ignored. So only non-null parameters are used in defining the search criteria.
+     * If any parameter is null, that parameter is ignored. 
+     * So only non-null parameters are used in defining the search criteria.
      */
     @Override
 	public List<City> findByName(String name) {
+    	if (name != null) name = "%"+name+"%"; // For like DB searches
         return cityDao.search(new Search(City.class).addFilterILike("description", name));
 	}
     

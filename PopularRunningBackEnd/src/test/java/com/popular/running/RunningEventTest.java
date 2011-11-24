@@ -3,9 +3,6 @@ package com.popular.running;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
 import com.popular.running.model.RunningEvent;
 import com.popular.running.operations.OperationsHolder;
 import com.popular.running.service.impl.RunningEventServiceImpl;
@@ -18,7 +15,7 @@ import com.popular.running.service.impl.RunningEventServiceImpl;
  */
 public class RunningEventTest
 {
-    private static ApplicationContext applicationContext;
+    //private static ApplicationContext applicationContext;
     private static RunningEventServiceImpl runningEventService;
 
     public static void showRunningEvents()
@@ -55,7 +52,7 @@ public class RunningEventTest
     public static void main( String[] args )
     {
         // Load the application context
-    	applicationContext = OperationsHolder.getInstance().getApplicationContext();
+    	//applicationContext = OperationsHolder.getInstance().getApplicationContext();
         //applicationContext = new ClassPathXmlApplicationContext( "classpath:applicationContext.xml" );
 
         // Load our customer service bean
@@ -64,6 +61,9 @@ public class RunningEventTest
 
         // Test code
         showRunningEvents();
+
+        // {"date":"1355245920000", "shortName":"Carrera Trofeo Akiles", "picture":"http://www.google.com/image.jpg", "distance":"3", "location":"345", "description":"Edición XII del Trofeo Akiles", "enrollment":"http://www.enrollment.com", "map":"http://www.map.com", "elevation":"http://www.elevation.com"}
+        
         addRunningEvent( new Date().getTime(), "Carrera Trofeo Akiles", "http://www.google.com/image.jpg", 3, 345, "Edición XII del Trofeo Akiles", "http://www.enrollment.com", "http://www.map.com", "http://www.elevation.com");
         showRunningEvents();
         shutdown();

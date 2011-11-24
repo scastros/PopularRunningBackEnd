@@ -11,16 +11,26 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.wink.common.annotations.Workspace;
 
 import com.popular.running.model.Distance;
 import com.popular.running.operations.OperationsHolder;
 import com.popular.running.service.impl.DistanceServiceImpl;
+import com.popular.running.utils.PopularRunningURLs;
+import com.popular.running.utils.SwissArmyKnife;
+
 
 /**
  * A resource that provides access to 
  * Distances stored in Database
+ * <p>
+ * Handler for requests for collection of Distances of PopularRunning application
+ * <p>
+ * The Resource is invoked for HTTP requests with URI:
+ * <code>http://[server]:[port]/PopularRunningBackEnd/jaxrs/PopularRunning/distances</code>
  */
-@Path(value="/PopularRunning/distances")
+@Path(value=PopularRunningURLs.DISTANCE_DISTANCES)
+@Workspace(workspaceTitle = SwissArmyKnife.APP_NAME, collectionTitle = "Distances")
 public class DistanceResource {
 	
 	@Context UriInfo uriInfo;
@@ -42,7 +52,7 @@ public class DistanceResource {
         return _distanceService.findAll();
     }
     
-    @Path("{id}")
+    @Path(PopularRunningURLs.GENERIC_ID)
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     /**
@@ -56,7 +66,7 @@ public class DistanceResource {
         return new Distance();
     }
     
-    @Path("name/{name}")
+    @Path(PopularRunningURLs.GENERIC_NAME)
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     /**
@@ -68,7 +78,7 @@ public class DistanceResource {
     	return _distanceService.findByName(name);
     }
 
-    @Path("less/{distance}")
+    @Path(PopularRunningURLs.DISTANCE_LESS)
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     /**
@@ -80,7 +90,7 @@ public class DistanceResource {
     	return _distanceService.findDistancesLessThan(distance);
     }
     
-    @Path("greater/{distance}")
+    @Path(PopularRunningURLs.DISTANCE_GREATER)
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     /**

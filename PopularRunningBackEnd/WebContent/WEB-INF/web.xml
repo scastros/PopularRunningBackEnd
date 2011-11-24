@@ -30,6 +30,15 @@
 		<servlet-name>JAX-RS Servlet</servlet-name>
 		<url-pattern>/jaxrs/*</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>restSdkAdmin</servlet-name>
+		<servlet-class>org.apache.wink.server.internal.servlet.AdminServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>restSdkAdmin</servlet-name>
+		<url-pattern>/admin</url-pattern>
+	</servlet-mapping>
+	
 	<!-- - This is useful because current browsers typically do not - set a 
 		character encoding even if specified in the HTML page or form -->
 	<filter>

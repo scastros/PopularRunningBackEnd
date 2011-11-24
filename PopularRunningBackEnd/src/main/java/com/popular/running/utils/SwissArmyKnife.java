@@ -6,11 +6,23 @@ package com.popular.running.utils;
  * @author scastros
  *
  */
-public abstract class SwissArmyKnife {
-	public static String[] parsers = new String [] {"dd/MM/yyyy"};
-
-
-	public SwissArmyKnife() {
-	}
+public final class SwissArmyKnife {
 	
+	public static final String APP_NAME = "PopularRunning";
+
+	public static final String[] parsers = new String [] {"dd/MM/yyyy"};
+
+
+	// PRIVATE //
+
+	/**
+	 * The caller references the constants using <tt>SwissArmyKnife.CONSTANT_NAME</tt>,
+	 * and so on. Thus, the caller should be prevented from constructing objects
+	 * of this class, by declaring this private constructor.
+	 */
+	private SwissArmyKnife() {
+		// this prevents even the native class from
+		// calling this actor as well :
+		throw new AssertionError();
+	}
 }

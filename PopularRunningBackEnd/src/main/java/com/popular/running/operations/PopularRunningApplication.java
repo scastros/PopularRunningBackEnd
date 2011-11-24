@@ -9,6 +9,7 @@ import org.apache.wink.providers.jettison.JettisonJAXBProvider;
 import org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider;
 import org.codehaus.jackson.map.AnnotationIntrospector;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 import org.codehaus.jackson.map.introspect.JacksonAnnotationIntrospector;
 import org.codehaus.jackson.xc.JaxbAnnotationIntrospector;
 
@@ -49,6 +50,7 @@ public class PopularRunningApplication extends Application {
         AnnotationIntrospector pair = new AnnotationIntrospector.Pair(primary, secondary);
         mapper.getDeserializationConfig().withAnnotationIntrospector(pair);
         mapper.getSerializationConfig().withAnnotationIntrospector(pair);
+        mapper.getSerializationConfig().withSerializationInclusion(Inclusion.NON_NULL);
 
         JettisonJAXBProvider jettisonProvider = new JettisonJAXBProvider();
         JacksonJaxbJsonProvider jacksonProvider = new JacksonJaxbJsonProvider();

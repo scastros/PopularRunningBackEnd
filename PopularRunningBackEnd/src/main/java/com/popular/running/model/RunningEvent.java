@@ -1,17 +1,22 @@
 package com.popular.running.model;
 
 import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.apache.wink.common.annotations.Asset;
 
 /**
  *
  * @author scastros
  */
+@Asset
 @Entity
 @Table( name = "RUNNINGEVENT")
 public class RunningEvent implements Serializable
@@ -107,6 +112,7 @@ public class RunningEvent implements Serializable
 		this.picture = picture;
 	}
 
+	@ManyToOne
 	public long getDistance() {
 		return distance;
 	}
@@ -115,6 +121,7 @@ public class RunningEvent implements Serializable
 		this.distance = distance;
 	}
 
+	@ManyToOne
 	public long getLocation() {
 		return location;
 	}

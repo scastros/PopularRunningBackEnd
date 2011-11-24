@@ -12,16 +12,25 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.wink.common.annotations.Workspace;
 
 import com.popular.running.model.City;
 import com.popular.running.operations.OperationsHolder;
 import com.popular.running.service.impl.CityServiceImpl;
+import com.popular.running.utils.PopularRunningURLs;
+import com.popular.running.utils.SwissArmyKnife;
 
 /**
  * A resource that provides access to 
  * Cities stored in Database
+ * <p>
+ * Handler for requests for collection of Cities of PopularRunning application
+ * <p>
+ * The Resource is invoked for HTTP requests with URI:
+ * <code>http://[server]:[port]/PopularRunningBackEnd/jaxrs/PopularRunning/cities</code>
  */
-@Path(value="/PopularRunning/cities")
+@Path(value=PopularRunningURLs.CITY_CITIES)
+@Workspace(workspaceTitle = SwissArmyKnife.APP_NAME, collectionTitle = "Cities")
 public class CityResource {
 	
 	@Context UriInfo uriInfo;
@@ -43,7 +52,7 @@ public class CityResource {
         return _cityService.findAll();
     }
     
-    @Path("{id}")
+    @Path(PopularRunningURLs.GENERIC_ID)
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     /**
@@ -58,7 +67,7 @@ public class CityResource {
         return new City();
     }
     
-    @Path("state/{id}")
+    @Path(PopularRunningURLs.CITY_ID_STATE)
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     /**
@@ -73,7 +82,7 @@ public class CityResource {
         return new ArrayList<City>();
     }
     
-    @Path("name/{name}")
+    @Path(PopularRunningURLs.GENERIC_NAME)
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     /**
@@ -83,7 +92,7 @@ public class CityResource {
      * @return The Cities
      */
     public List<City> getCitiesNameContains(@PathParam("name") String name) {
-   		return _cityService.findByName("%"+name+"%");
+   		return _cityService.findByName(name);
     }    
     
 }

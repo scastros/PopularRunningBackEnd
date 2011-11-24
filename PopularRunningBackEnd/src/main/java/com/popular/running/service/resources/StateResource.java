@@ -11,16 +11,25 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.wink.common.annotations.Workspace;
 
 import com.popular.running.model.State;
 import com.popular.running.operations.OperationsHolder;
 import com.popular.running.service.impl.StateServiceImpl;
+import com.popular.running.utils.PopularRunningURLs;
+import com.popular.running.utils.SwissArmyKnife;
 
 /**
  * A resource that provides access to 
  * States stored in Database
+ * <p>
+ * Handler for requests for collection of States of PopularRunning application
+ * <p>
+ * The Resource is invoked for HTTP requests with URI:
+ * <code>http://[server]:[port]/PopularRunningBackEnd/jaxrs/PopularRunning/states</code>
  */
-@Path(value="/PopularRunning/states")
+@Path(value=PopularRunningURLs.STATE_STATES)
+@Workspace(workspaceTitle = SwissArmyKnife.APP_NAME, collectionTitle = "States")
 public class StateResource {
 	
 	@Context UriInfo uriInfo;
@@ -40,7 +49,7 @@ public class StateResource {
     }
     
     /** Returns given id State */
-    @Path("{id}")
+    @Path(PopularRunningURLs.GENERIC_ID)
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public State getStateById(@PathParam("id") String id) {
@@ -49,7 +58,7 @@ public class StateResource {
         return new State();
     }
     
-    @Path("name/{name}")
+    @Path(PopularRunningURLs.GENERIC_NAME)
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     /**
