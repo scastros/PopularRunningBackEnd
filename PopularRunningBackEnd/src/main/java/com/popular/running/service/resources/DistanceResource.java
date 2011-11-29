@@ -15,7 +15,7 @@ import org.apache.wink.common.annotations.Workspace;
 
 import com.popular.running.model.Distance;
 import com.popular.running.operations.OperationsHolder;
-import com.popular.running.service.impl.DistanceServiceImpl;
+import com.popular.running.service.DistanceService;
 import com.popular.running.utils.PopularRunningURLs;
 import com.popular.running.utils.SwissArmyKnife;
 
@@ -36,7 +36,8 @@ public class DistanceResource {
 	@Context UriInfo uriInfo;
 	
 	private static OperationsHolder _operations = OperationsHolder.getInstance();
-	private static DistanceServiceImpl _distanceService = _operations.getDistanceService();
+	@SuppressWarnings("unchecked")
+	private static DistanceService<Distance> _distanceService = (DistanceService<Distance>)_operations.getDistanceService();
 	
     public DistanceResource() {
     }
@@ -48,7 +49,7 @@ public class DistanceResource {
      *  
      *  @return The distances
      */
-    public List<Distance> getDistances() {
+    public List<Object> getDistances() {
         return _distanceService.findAll();
     }
     
@@ -60,7 +61,7 @@ public class DistanceResource {
      * @param id
      * @return Distance
      */
-    public Distance getDistanceById(@PathParam("id") String id) {
+    public Object getDistanceById(@PathParam("id") String id) {
     	if (StringUtils.isNumeric(id))
     		return _distanceService.findById(Long.parseLong(id));
         return new Distance();
@@ -74,7 +75,7 @@ public class DistanceResource {
      * @param name
      * @return Distance
      */
-    public List<Distance> getDistanceByName(@PathParam("name") String name) {
+    public List<Object> getDistanceByName(@PathParam("name") String name) {
     	return _distanceService.findByName(name);
     }
 

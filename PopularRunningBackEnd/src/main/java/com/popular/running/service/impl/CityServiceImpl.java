@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.googlecode.genericdao.search.Search;
 import com.popular.running.dao.CityDAO;
 import com.popular.running.model.City;
-import com.popular.running.service.BaseService;
+import com.popular.running.service.CityService;
 
 /**
  * Implements the business methods for the City service
@@ -20,7 +20,7 @@ import com.popular.running.service.BaseService;
 @Transactional
 @TransactionConfiguration(defaultRollback=false)
 @Service( "cityService" )
-public class CityServiceImpl extends BaseServiceImpl implements BaseService
+public class CityServiceImpl extends BaseServiceImpl implements CityService
 {
     @Autowired
     private CityDAO cityDao;
@@ -76,6 +76,7 @@ public class CityServiceImpl extends BaseServiceImpl implements BaseService
      * @param stateId
      * @return
      */
+    @Override
 	public List<City> findCitiesInState(long stateId) {
         return cityDao.search(new Search(City.class).addFilterEqual("state", stateId));
 	}    

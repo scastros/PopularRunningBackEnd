@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.googlecode.genericdao.search.Search;
 import com.popular.running.dao.DistanceDAO;
 import com.popular.running.model.Distance;
-import com.popular.running.service.BaseService;
+import com.popular.running.service.DistanceService;
 
 /**
  * Implements the business methods for the Distance service
@@ -20,7 +20,7 @@ import com.popular.running.service.BaseService;
 @Transactional
 @TransactionConfiguration(defaultRollback=false)
 @Service( "distanceService" )
-public class DistanceServiceImpl extends BaseServiceImpl implements BaseService
+public class DistanceServiceImpl extends BaseServiceImpl implements DistanceService
 {
     @Autowired
     private DistanceDAO distanceDao;
@@ -74,6 +74,7 @@ public class DistanceServiceImpl extends BaseServiceImpl implements BaseService
      * @param distance
      * @return Distances that meet the criteria
      */
+    @Override
 	public List<Distance> findDistancesGreatherThan(long distance) {
         return distanceDao.search(new Search(Distance.class).addFilterGreaterOrEqual("meters", distance));
 	} 
@@ -83,6 +84,7 @@ public class DistanceServiceImpl extends BaseServiceImpl implements BaseService
      * @param distance
      * @return Distances that meet the criteria
      */
+    @Override
 	public List<Distance> findDistancesLessThan(long distance) {
         return distanceDao.search(new Search(Distance.class).addFilterLessOrEqual("meters", distance));
 	} 	

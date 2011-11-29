@@ -56,7 +56,7 @@ public class RunningEventTest
         //applicationContext = new ClassPathXmlApplicationContext( "classpath:applicationContext.xml" );
 
         // Load our customer service bean
-        runningEventService = OperationsHolder.getInstance().getRunningEventService();
+        //runningEventService = OperationsHolder.getInstance().getRunningEventService();
         //runningEventService = ( RunningEventServiceImpl )applicationContext.getBean( "runningEventService" );
 
         // Test code

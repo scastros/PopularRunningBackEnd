@@ -16,7 +16,7 @@ import org.apache.wink.common.annotations.Workspace;
 
 import com.popular.running.model.City;
 import com.popular.running.operations.OperationsHolder;
-import com.popular.running.service.impl.CityServiceImpl;
+import com.popular.running.service.CityService;
 import com.popular.running.utils.PopularRunningURLs;
 import com.popular.running.utils.SwissArmyKnife;
 
@@ -36,7 +36,8 @@ public class CityResource {
 	@Context UriInfo uriInfo;
 	
 	private static OperationsHolder _operations = OperationsHolder.getInstance();
-	private static CityServiceImpl _cityService = _operations.getCityService();
+	@SuppressWarnings("unchecked")
+	private static CityService<City> _cityService = (CityService<City>)_operations.getCityService();
 	
     public CityResource() {
     }
@@ -48,7 +49,7 @@ public class CityResource {
      * 
      * @return cities
      */
-    public List<City> getCities() {
+    public List<Object> getCities() {
         return _cityService.findAll();
     }
     
@@ -61,7 +62,7 @@ public class CityResource {
      * @param City id
      * @return The City
      */
-    public City getCityById(@PathParam("id") String id) {
+    public Object getCityById(@PathParam("id") String id) {
     	if (StringUtils.isNumeric(id))
     		return _cityService.findById(Long.parseLong(id));
         return new City();
@@ -91,7 +92,7 @@ public class CityResource {
      * @param id of the state
      * @return The Cities
      */
-    public List<City> getCitiesNameContains(@PathParam("name") String name) {
+    public List<Object> getCitiesNameContains(@PathParam("name") String name) {
    		return _cityService.findByName(name);
     }    
     

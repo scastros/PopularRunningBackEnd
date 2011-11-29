@@ -22,7 +22,7 @@ import org.apache.wink.common.annotations.Workspace;
 
 import com.popular.running.model.RunningEvent;
 import com.popular.running.operations.OperationsHolder;
-import com.popular.running.service.impl.RunningEventServiceImpl;
+import com.popular.running.service.RunningEventService;
 import com.popular.running.utils.PopularRunningURLs;
 import com.popular.running.utils.SwissArmyKnife;
 
@@ -42,7 +42,8 @@ public class RunningEventResource {
 	@Context UriInfo uriInfo;
 	
 	private static OperationsHolder _operations = OperationsHolder.getInstance();
-	private static RunningEventServiceImpl _runningEventService = _operations.getRunningEventService();
+	@SuppressWarnings("unchecked")
+	private static RunningEventService<RunningEvent> _runningEventService = (RunningEventService<RunningEvent>)_operations.getRunningEventService();
 	private Log log = LogFactory.getLog(RunningEventResource.class);
 
     /**
@@ -55,7 +56,7 @@ public class RunningEventResource {
      */
 	@GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<RunningEvent> getRunningEvents() {
+    public List<Object> getRunningEvents() {
         return _runningEventService.findAll();
     }
     
@@ -69,7 +70,7 @@ public class RunningEventResource {
     @Produces(MediaType.APPLICATION_JSON)
     public RunningEvent getRunningEventById(@PathParam("id") String id) {
     	if (StringUtils.isNumeric(id))
-    		return _runningEventService.findById(Long.parseLong(id));
+    		return (RunningEvent)_runningEventService.findById(Long.parseLong(id));
         return new RunningEvent();
     }
     
@@ -81,7 +82,7 @@ public class RunningEventResource {
     @Path(PopularRunningURLs.GENERIC_NAME)
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<RunningEvent> getRunningEventByName(@PathParam("name") String name) {
+    public List<Object> getRunningEventByName(@PathParam("name") String name) {
     	return _runningEventService.findByName(name);
     }
     
@@ -161,6 +162,7 @@ public class RunningEventResource {
     	}
     	// RunningEvent creation
     	_runningEventService.save(runningevent);
+    	_runningEventService.flush();
         // return the RunningEvent and set the status code to created (201)
         URI location = uriInfo.getAbsolutePathBuilder().segment(String.valueOf(runningevent.getId())).build();
         return Response.created(location).entity(runningevent).build();    	

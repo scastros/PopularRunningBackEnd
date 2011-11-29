@@ -15,7 +15,7 @@ import org.apache.wink.common.annotations.Workspace;
 
 import com.popular.running.model.State;
 import com.popular.running.operations.OperationsHolder;
-import com.popular.running.service.impl.StateServiceImpl;
+import com.popular.running.service.StateService;
 import com.popular.running.utils.PopularRunningURLs;
 import com.popular.running.utils.SwissArmyKnife;
 
@@ -35,7 +35,8 @@ public class StateResource {
 	@Context UriInfo uriInfo;
 	
 	private static OperationsHolder _operations = OperationsHolder.getInstance();
-	private static StateServiceImpl _stateService = _operations.getStateService();
+	@SuppressWarnings("unchecked")
+	private static StateService<State> _stateService = (StateService<State>)_operations.getStateService();
 	
     public StateResource() {
     }
@@ -44,7 +45,7 @@ public class StateResource {
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<State> getStates() {
+    public List<Object> getStates() {
         return _stateService.findAll();
     }
     
@@ -52,7 +53,7 @@ public class StateResource {
     @Path(PopularRunningURLs.GENERIC_ID)
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public State getStateById(@PathParam("id") String id) {
+    public Object getStateById(@PathParam("id") String id) {
     	if (StringUtils.isNumeric(id))
     		return _stateService.findById(Long.parseLong(id));
         return new State();
@@ -66,7 +67,7 @@ public class StateResource {
      * @param name
      * @return State
      */
-    public List<State> getStateByName(@PathParam("name") String name) {
+    public List<Object> getStateByName(@PathParam("name") String name) {
     	return _stateService.findByName(name);
     }
 }

@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.googlecode.genericdao.search.Search;
 import com.popular.running.dao.StateDAO;
 import com.popular.running.model.State;
-import com.popular.running.service.BaseService;
+import com.popular.running.service.StateService;
 
 /**
  * Implements the business methods for the RunningEvent service
@@ -20,7 +20,7 @@ import com.popular.running.service.BaseService;
 @Transactional
 @TransactionConfiguration(defaultRollback=false)
 @Service( "stateService" )
-public class StateServiceImpl extends BaseServiceImpl implements BaseService
+public class StateServiceImpl extends BaseServiceImpl implements StateService
 {
     @Autowired
     private StateDAO stateDao;

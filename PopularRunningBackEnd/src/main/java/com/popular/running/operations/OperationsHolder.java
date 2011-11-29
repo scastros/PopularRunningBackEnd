@@ -3,10 +3,7 @@ package com.popular.running.operations;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.popular.running.service.impl.CityServiceImpl;
-import com.popular.running.service.impl.DistanceServiceImpl;
-import com.popular.running.service.impl.RunningEventServiceImpl;
-import com.popular.running.service.impl.StateServiceImpl;
+import com.popular.running.service.BaseService;
 
 /**
  * Operations Holder. 
@@ -18,26 +15,26 @@ import com.popular.running.service.impl.StateServiceImpl;
 public class OperationsHolder {
 
     private static ApplicationContext applicationContext;
-    private static RunningEventServiceImpl runningEventService;
-    private static CityServiceImpl cityService;
-    private static DistanceServiceImpl distanceService;
-    private static StateServiceImpl stateService;
+    private static BaseService<?> runningEventService;
+    private static BaseService<?> cityService;
+    private static BaseService<?> distanceService;
+    private static BaseService<?> stateService;
     
     public OperationsHolder() {
         // Load the application context
         applicationContext = new ClassPathXmlApplicationContext( "classpath:applicationContext.xml" );
 
         // Load runningEvent service bean
-        runningEventService = ( RunningEventServiceImpl )applicationContext.getBean( "runningEventService" );
+        runningEventService = ( BaseService<?> )applicationContext.getBean( "runningEventService" );
 
         // Load city service bean
-        cityService = ( CityServiceImpl )applicationContext.getBean( "cityService" );
+        cityService = ( BaseService<?> )applicationContext.getBean( "cityService" );
 
         // Load distance service bean
-        distanceService = ( DistanceServiceImpl )applicationContext.getBean( "distanceService" );
+        distanceService = ( BaseService<?> )applicationContext.getBean( "distanceService" );
         
         // Load state service bean
-        stateService = ( StateServiceImpl )applicationContext.getBean( "stateService" );
+        stateService = ( BaseService<?> )applicationContext.getBean( "stateService" );
     }
 
     /**
@@ -48,19 +45,19 @@ public class OperationsHolder {
 		return _instance;
 	}
 	
-	public RunningEventServiceImpl getRunningEventService() {
+	public BaseService<?> getRunningEventService() {
 		return runningEventService;
 	}
 
-	public CityServiceImpl getCityService() {
+	public BaseService<?> getCityService() {
 		return cityService;
 	}
 
-	public DistanceServiceImpl getDistanceService() {
+	public BaseService<?> getDistanceService() {
 		return distanceService;
 	}
 
-	public StateServiceImpl getStateService() {
+	public BaseService<?> getStateService() {
 		return stateService;
 	}
 	

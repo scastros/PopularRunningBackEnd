@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.apache.wink.common.annotations.Asset;
@@ -19,6 +20,7 @@ import org.apache.wink.common.annotations.Asset;
 @Asset
 @Entity
 @Table( name = "RUNNINGEVENT")
+@SequenceGenerator(name="running_event_id", sequenceName="RUNNINGEVENT_SQ", allocationSize=1)
 public class RunningEvent implements Serializable
 {
     /**
@@ -30,7 +32,7 @@ public class RunningEvent implements Serializable
      * The RunningEvent's id attribute
      */
     @Id
-    @GeneratedValue( strategy = GenerationType.AUTO )
+    @GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "running_event_id" )
     @Column( name = "ID" )
     private long id;
     

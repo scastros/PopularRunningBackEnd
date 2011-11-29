@@ -6,17 +6,19 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.time.DateUtils;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.googlecode.genericdao.search.Search;
+import com.popular.running.dao.CityDAO;
 import com.popular.running.dao.RunningEventDAO;
 import com.popular.running.model.City;
 import com.popular.running.model.RunningEvent;
-import com.popular.running.operations.OperationsHolder;
-import com.popular.running.service.BaseService;
+import com.popular.running.service.RunningEventService;
 import com.popular.running.utils.SwissArmyKnife;
 
 /**
@@ -24,15 +26,18 @@ import com.popular.running.utils.SwissArmyKnife;
  * @author scastros
  */
 @SuppressWarnings("rawtypes")
-@Transactional
+@Transactional(readOnly = false, propagation=Propagation.REQUIRES_NEW)
 @TransactionConfiguration(defaultRollback=false)
 @Service( "runningEventService" )
-public class RunningEventServiceImpl extends BaseServiceImpl implements BaseService
+public class RunningEventServiceImpl extends BaseServiceImpl implements RunningEventService
 {
     @Autowired
     private RunningEventDAO runningEventDao;
     
-    private static OperationsHolder _operations = OperationsHolder.getInstance();
+    @Autowired
+    private CityDAO cityDao;
+    
+    Transaction transaction;
 
     @Override
     public RunningEvent findById( long id )
@@ -47,6 +52,7 @@ public class RunningEventServiceImpl extends BaseServiceImpl implements BaseServ
     }
 
     @Override
+    @Transactional
     public void save( Object runningEvent )
     {
         runningEventDao.save( (RunningEvent)runningEvent );
@@ -84,6 +90,7 @@ public class RunningEventServiceImpl extends BaseServiceImpl implements BaseServ
      * @param cityId
      * @return The RunningEvents
      */
+    @Override
 	public List<RunningEvent> findByCity(long cityId) {
         return runningEventDao.search(new Search(RunningEvent.class).addFilterEqual("location", cityId));
 	}
@@ -94,9 +101,9 @@ public class RunningEventServiceImpl extends BaseServiceImpl implements BaseServ
      * @param stateId
      * @return The RunningEvents
      */
+    @Override
     public List<RunningEvent> findByState(long stateId) {
-    	CityServiceImpl cityImpl = _operations.getCityService();
-    	List<City> citiesInState = cityImpl.findCitiesInState(stateId);
+    	List<City> citiesInState = cityDao.search(new Search(City.class).addFilterEqual("state", stateId));
     	return runningEventDao.search(new Search(RunningEvent.class).addFilterIn("location", citiesInState));
     }
     
@@ -106,6 +113,7 @@ public class RunningEventServiceImpl extends BaseServiceImpl implements BaseServ
      * @param distanceId
      * @return The RunningEvents
      */
+    @Override
     public List<RunningEvent> findByDistance(long distanceId) {
     	return runningEventDao.search(new Search(RunningEvent.class).addFilterEqual("distance", distanceId));
     }
@@ -116,6 +124,7 @@ public class RunningEventServiceImpl extends BaseServiceImpl implements BaseServ
      * @param date format DD/MM/YYYY
      * @return The RunningEvents
      */
+    @Override
     public List<RunningEvent> findByDate(String date) {
     	Date givenDate = new Date();
     	try {
@@ -132,6 +141,7 @@ public class RunningEventServiceImpl extends BaseServiceImpl implements BaseServ
      * @param month 
      * @return The RunningEvents
      */
+    @Override
     public List<RunningEvent> findByMonth(int month) {
     	Calendar calendar = Calendar.getInstance();
     	calendar.set(Calendar.MONTH, month);
