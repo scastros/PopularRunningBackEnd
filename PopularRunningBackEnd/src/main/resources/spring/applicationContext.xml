@@ -13,7 +13,7 @@
     <context:component-scan base-package="com.popular.running" />
     
     <!-- holding properties for database connectivity /-->
-    <context:property-placeholder location="classpath:jdbc.properties,hibernate.properties"/>
+    <context:property-placeholder location="classpath:properties/jdbc.properties,classpath:properties/hibernate.properties"/>
 
     <!-- enabling annotation driven configuration /-->
     <context:annotation-config/>
@@ -127,7 +127,7 @@
     the listener already have initialize the class with the path of the class
     -->
 
-    <bean id="hsqlDatabasePathResolver" class="com.popular.running.listeners.HsqlDatabasePathResolver" factory-method="getInstance" lazy-init="false">
+    <bean id="hsqlDatabasePathResolver" class="com.popular.running.listeners.resolvers.HsqlDatabasePathResolver" factory-method="getInstance" lazy-init="false">
             <constructor-arg>
                 <value>${user.dir}</value>
             </constructor-arg>

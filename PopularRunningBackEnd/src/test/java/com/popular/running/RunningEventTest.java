@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import com.popular.running.model.RunningEvent;
-import com.popular.running.operations.OperationsHolder;
 import com.popular.running.service.impl.RunningEventServiceImpl;
 
 /**
@@ -40,7 +39,7 @@ public class RunningEventTest
 										long distance, long location, String description,
 										String enrollment, String map, String elevation )
     {
-        runningEventService.save( new RunningEvent(date, shortName, picture, distance, location, description, enrollment, map, elevation) );
+        //runningEventService.save( new RunningEvent(date, shortName, picture, distance, location, description, enrollment, map, elevation) );
     }
 
     public static void shutdown()

@@ -7,11 +7,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.apache.wink.common.annotations.Asset;
+import org.hibernate.validator.constraints.Length;
 
 /**
  *
@@ -39,33 +44,47 @@ public class RunningEvent implements Serializable
     
     @Column( name = "DATE" )
     private long date;
-    
+
+    @Length(max=512)
     @Column( name = "SHORTNAME" )
     private String shortName;
     
+    @Length(max=512)
     @Column( name = "PICTURE" )
     private String picture;
     
-    @Column( name = "DISTANCE" )
-    private long distance;
+    //@Column( name = "DISTANCE" )
+    @MapsId("distance")
+    @JoinColumns({
+      @JoinColumn(name="distance_fk", referencedColumnName="id")
+    }) @OneToOne
+    private Distance distance;
     
-    @Column( name = "LOCATION" )
-    private long location;
+    //@Column( name = "LOCATION" )
+    @MapsId("location")
+    @JoinColumns({
+      @JoinColumn(name="city_fk", referencedColumnName="id")
+    }) @OneToOne    
+    private City location;
     
+    @Length(max=2000)
     @Column( name = "DESCRIPTION" )
     private String description;
     
+    @Length(max=512)
     @Column( name = "ENROLLMENT" )
     private String enrollment;
     
+    @Length(max=512)
     @Column( name = "MAP" )
     private String map;
     
+    @Length(max=512)
     @Column( name = "ELEVATION" )
     private String elevation;
 
 	public RunningEvent(long date, String shortName, String picture,
-			long distance, long location, String description,
+			Distance distance, City location, String description,
 			String enrollment, String map, String elevation) {
 		super();
 		this.date = date;
@@ -115,20 +134,20 @@ public class RunningEvent implements Serializable
 	}
 
 	@ManyToOne
-	public long getDistance() {
+	public Distance getDistance() {
 		return distance;
 	}
 
-	public void setDistance(long distance) {
+	public void setDistance(Distance distance) {
 		this.distance = distance;
 	}
 
 	@ManyToOne
-	public long getLocation() {
+	public City getLocation() {
 		return location;
 	}
 
-	public void setLocation(long location) {
+	public void setLocation(City location) {
 		this.location = location;
 	}
 
@@ -162,5 +181,31 @@ public class RunningEvent implements Serializable
 
 	public void setElevation(String elevation) {
 		this.elevation = elevation;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("RunningEvent [")
+			   .append("date=").append(date)
+			   .append(", shortName=").append(shortName)
+			   .append(", picture=").append(picture)
+			   .append(", distance=").append(distance)
+			   .append(", location=").append(location)
+			   .append(", description=").append(description)
+			   .append(", enrollment=").append(enrollment)
+			   .append(", map=").append(map)
+			   .append(", elevation=").append(elevation)				
+			   .append("]");
+		return builder.toString();
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		Long lId = new Long(id);
+		result = prime * result + ((lId == null) ? 0 : lId.hashCode());
+		return result;
 	}
 }

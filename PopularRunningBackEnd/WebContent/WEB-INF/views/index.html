@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+
+<title></title>
+<meta name="description" content="HTML 5 CSS 3 Spring Form"/>
+<meta name="author" content="alex soto"/>
+
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+
+<link rel="stylesheet" href="../../css/style.css" th:href="@{/css/style.css}"/>
+
+<script src="js/libs/modernizr-2.0.6.min.js"></script>
+</head>
+
+<body>
+	<div id="container">
+		<header> </header>
+
+		<form action="#" th:object="${runningEvent}" th:action="@{/insert}"
+			method="post">
+
+			<h1>New Popular Running Event ...</h1>
+
+
+			<fieldset id="running-event-details">
+
+				<label for="date" th:text="#{theader.date}">Date: </label> 
+				<input type="text" name="date"
+					value="" id="date" placeholder="Date" required="required"
+					autofocus="autofocus" th:value="*{date}" />
+				<label for="shortName" th:text="#{theader.shortName}">Short Name: </label>
+				<input type="text" name="shortName" value="" id="shortName" placeholder="Main Course Name" required="required" th:value="*{shortName}" /> 
+				<label for="picture" th:text="#{theader.picture}">Picture URL:</label> 
+				<input type="url" name="picture" value="" th:value="*{picture}" />
+				<label for="distance" th:text="#{theader.distance}">Race Distance:</label> 
+				<input type="text" name="distance" value="" th:value="*{distance}" />
+				<label for="location" th:text="#{theader.location}">Location:</label> 
+				<input type="text" name="location" value="" th:value="*{location}" />
+				<label for="enrollment" th:text="#{theader.enrollment}">Enrollment URL:</label> 
+				<input type="url" name="enrollment" value="" th:value="*{enrollment}" />
+				<label for="map" th:text="#{theader.map}">Map URL:</label> 
+				<input type="url" name="map" value="" th:value="*{map}" />
+				<label for="elevation" th:text="#{theader.elevation}">Elevation URL:</label> 
+				<input type="url" name="elevation" value="" th:value="*{elevation}" />
+				
+			</fieldset>
+			<!--end running-event-details-->
+			
+			<fieldset id="running-event-description">
+
+				<label for="description" th:text="#{theader.description}">Event Description: </label>
+				<textarea name="description" rows="0" cols="0" th:value="*{description}" ></textarea>
+
+				<input type="submit" value="Submit Running Event" name="submit"	class="submit" />
+			</fieldset>
+			<!-- end running-event-description -->
+			<div id="errors" th:if="${#fields.hasErrors('*')}">
+					<ul>
+						<li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
+					</ul>
+			</div>
+		</form>
+
+		<footer>
+			
+		</footer>
+	</div>
+	<!--! end of #container -->
+	<script
+		src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+	
+		<script>
+		/*<![CDATA[*/
+		      window.jQuery
+				|| document
+						.write('<script src="js/libs/jquery-1.6.2.min.js"><\/script>')     
+		/*]]>*/
+	</script>
+
+</body>
+</html>

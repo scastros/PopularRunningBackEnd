@@ -1,4 +1,4 @@
-package com.popular.running.listeners;
+package com.popular.running.listeners.resolvers;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

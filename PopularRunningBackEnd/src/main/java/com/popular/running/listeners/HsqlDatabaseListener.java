@@ -7,6 +7,8 @@ import javax.servlet.ServletContextListener;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.popular.running.listeners.resolvers.HsqlDatabasePathResolver;
+
 /**
  * Determines where in the disk is located the database file
  *

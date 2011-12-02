@@ -10,5 +10,6 @@ import java.util.List;
  * @param <T>
  */
 public interface CityService <City extends Object> extends BaseService<Object>{
+	public final static String SERVICE_NAME = "cityService";
 	public List<City> findCitiesInState(long stateId);
 }

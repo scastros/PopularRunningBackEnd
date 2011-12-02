@@ -12,9 +12,23 @@
 		<welcome-file>default.htm</welcome-file>
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
+
+	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			/WEB-INF/classes/spring/root-context.xml
+			/WEB-INF/classes/spring/applicationContext.xml
+		</param-value>
+	</context-param>
+		
 	<!-- This is to get root of the aplication -->
 	<listener>
 		<listener-class>com.popular.running.listeners.HsqlDatabaseListener</listener-class>
+	</listener>
+	<!-- Creates the Spring Container shared by all Servlets and Filters -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 	<servlet>
 		<description>JAX-RS Tools Generated - Do not modify</description>
@@ -38,6 +52,30 @@
 		<servlet-name>restSdkAdmin</servlet-name>
 		<url-pattern>/admin</url-pattern>
 	</servlet-mapping>
+	<!-- Processes application requests -->
+	<servlet>
+		<servlet-name>appServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/classes/spring/appServlet/servlet-context.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>appServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+   		<servlet-name>Log4JServlet</servlet-name>
+   		<servlet-class>com.popular.running.logger.Log4JServlet</servlet-class>
+      	<init-param>
+        	<param-name>log4j-init-file</param-name>
+         	<param-value>/WEB-INF/classes/properties/log4j.properties</param-value>
+      	</init-param>
+   		<load-on-startup>1</load-on-startup>
+	</servlet>
 	
 	<!-- - This is useful because current browsers typically do not - set a 
 		character encoding even if specified in the HTML page or form -->
