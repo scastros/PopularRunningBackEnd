@@ -369,7 +369,7 @@ fieldset {
 	padding: 0;
 }
 
-input,textarea {
+input,textarea,select {
 	padding: 8px;
 	margin: 4px 0 20px 0;
 	background: #fff;
@@ -902,11 +902,11 @@ fieldset {
 	padding: 0;
 }
 
-input,textarea {
+input,select,textarea {
 	padding: 8px;
 	margin: 4px 0 20px 0;
 	background: #fff;
-	width: 220px;
+	width: 265px;
 	font-size: 14px;
 	color: #555;
 	border: 1px #ddd solid;

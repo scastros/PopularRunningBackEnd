@@ -37,9 +37,16 @@
 				<input type="text" name="shortName" value="" id="shortName" placeholder="Main Course Name" required="required" th:value="*{shortName}" /> 
 				<label for="picture" th:text="#{theader.picture}">Picture URL:</label> 
 				<input type="url" name="picture" value="" th:value="*{picture}" />
-				<label for="distance" th:text="#{theader.distance}">Race Distance:</label> 
-				<input type="text" name="distance" value="" th:value="*{distance}" />
+				<label for="distance" th:text="#{theader.distance}">Race Distance:</label>
+				<select th:field="*{distance}" style="width:282px;"> 
+					<option th:each="distance : ${allDistances}" th:value="${distance.id}" th:text="${distance.description}">Distance</option>
+				</select>
+				<br/>
 				<label for="location" th:text="#{theader.location}">Location:</label> 
+				<select th:field="*{state}" style="width:282px;"> 
+					<option th:each="state : ${allStates}" th:value="${state.id}" th:text="${state.description}">State</option>
+				</select>
+				<br/>
 				<input type="text" name="location" value="" th:value="*{location}" />
 				<label for="enrollment" th:text="#{theader.enrollment}">Enrollment URL:</label> 
 				<input type="url" name="enrollment" value="" th:value="*{enrollment}" />
@@ -56,7 +63,7 @@
 				<label for="description" th:text="#{theader.description}">Event Description: </label>
 				<textarea name="description" rows="0" cols="0" th:value="*{description}" ></textarea>
 
-				<input type="submit" value="Submit Running Event" name="submit"	class="submit" />
+				<input type="submit" value=" Create Running Event " name="submit"	class="submit" />
 			</fieldset>
 			<!-- end running-event-description -->
 			<div id="errors" th:if="${#fields.hasErrors('*')}">
