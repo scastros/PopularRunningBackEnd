@@ -8,6 +8,9 @@
 	<description>REST API, Data Model, and back end maintenance app for Popular Running project</description>
 	<!-- Shared version number properties -->
 	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<tomcat.version>6.0.29</tomcat.version>
+		<webapp.reloadable>true</webapp.reloadable>
 		<org.springframework.version>3.0.6.RELEASE</org.springframework.version>
 		<org.apache.wink.version>1.1.3-incubating</org.apache.wink.version>
 		<org.hibernate.version>3.6.8.Final</org.hibernate.version>
@@ -18,11 +21,143 @@
 		<org.codehaus.jackson.version>1.9.2</org.codehaus.jackson.version>
 		<org.thymeleaf.version>1.1.2</org.thymeleaf.version>
 		<org.slf4j.version>1.6.4</org.slf4j.version>
+		<commons-logging.version>1.1.1</commons-logging.version>
+		<commons-dbcp.version>20030825.184428</commons-dbcp.version>
+		<commons-pool.version>1.5.6</commons-pool.version>
 	</properties>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>maven-tomcat</id>
+			<url>http://people.apache.org/repo/m2-snapshot-repository/</url>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.tomcat.maven</groupId>
+					<artifactId>tomcat6-maven-plugin</artifactId>
+					<version>2.0-20111106.141929-23</version>
+					<dependencies>
+						<dependency>
+							<groupId>org.apache.tomcat</groupId>
+							<artifactId>catalina</artifactId>
+							<version>${tomcat.version}</version>
+						</dependency>
+						<dependency>
+							<groupId>org.apache.tomcat</groupId>
+							<artifactId>catalina-ha</artifactId>
+							<version>${tomcat.version}</version>
+							<scope>runtime</scope>
+						</dependency>
+						<dependency>
+							<groupId>org.apache.tomcat</groupId>
+							<artifactId>tribes</artifactId>
+							<version>${tomcat.version}</version>
+							<scope>runtime</scope>
+						</dependency>
+						<dependency>
+							<groupId>org.apache.tomcat</groupId>
+							<artifactId>el-api</artifactId>
+							<version>${tomcat.version}</version>
+							<scope>runtime</scope>
+						</dependency>
+						<dependency>
+							<groupId>org.apache.tomcat</groupId>
+							<artifactId>jasper</artifactId>
+							<version>${tomcat.version}</version>
+							<scope>runtime</scope>
+						</dependency>
+						<dependency>
+							<groupId>org.apache.tomcat</groupId>
+							<artifactId>jasper-el</artifactId>
+							<version>${tomcat.version}</version>
+							<scope>runtime</scope>
+						</dependency>
+						<dependency>
+							<groupId>org.apache.tomcat</groupId>
+							<artifactId>jasper-jdt</artifactId>
+							<version>${tomcat.version}</version>
+							<scope>runtime</scope>
+						</dependency>
+						<dependency>
+							<groupId>org.apache.tomcat</groupId>
+							<artifactId>jsp-api</artifactId>
+							<version>${tomcat.version}</version>
+							<scope>runtime</scope>
+						</dependency>
+						<dependency>
+							<groupId>org.apache.tomcat</groupId>
+							<artifactId>servlet-api</artifactId>
+							<version>${tomcat.version}</version>
+							<scope>runtime</scope>
+						</dependency>
+						<dependency>
+							<groupId>org.apache.tomcat</groupId>
+							<artifactId>coyote</artifactId>
+							<version>${tomcat.version}</version>
+							<scope>runtime</scope>
+						</dependency>
+						<dependency>
+							<groupId>org.apache.tomcat</groupId>
+							<artifactId>dbcp</artifactId>
+							<version>${tomcat.version}</version>
+							<scope>runtime</scope>
+						</dependency>
+					</dependencies>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-war-plugin</artifactId>
+					<version>2.1.1</version>
+					<configuration>
+						<webResources>
+							<resource>
+								<!-- this is relative to the pom.xml directory -->
+								<directory>src/main/resources</directory>
+              					<targetPath>WEB-INF/classes</targetPath>								
+							</resource>
+						</webResources>
+					</configuration>
+				</plugin>
+				<plugin>
+	                <groupId>org.codehaus.mojo</groupId>
+	                <artifactId>tomcat-maven-plugin</artifactId>
+	                <configuration>
+	                         <url>http://localhost:8080/manager/html</url>
+	                         <server>mytomcat</server>
+	                </configuration>
+            	</plugin>
+				
+			</plugins>
+		</pluginManagement>
+	</build>
+
 	<dependencies>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.0</version>
+			<scope>provided</scope>
+		</dependency>
+
 		<dependency>
 			<groupId>org.apache.wink</groupId>
 			<artifactId>wink-server</artifactId>
+			<version>${org.apache.wink.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.wink</groupId>
+			<artifactId>wink-jettison-provider</artifactId>
+			<version>${org.apache.wink.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.wink</groupId>
+			<artifactId>wink-jackson-provider</artifactId>
 			<version>${org.apache.wink.version}</version>
 		</dependency>
 
@@ -169,7 +304,6 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
 			<version>${org.springframework.version}</version>
-			<scope>test</scope>
 		</dependency>
 
 		<!-- This first dependency includes all the JPA implementations for the 
@@ -187,9 +321,30 @@
 			<version>${com.googlecode.genericdao.version}</version>
 		</dependency>
 
+		<!-- Jackson JSON Mapper -->
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-core-lgpl</artifactId>
+			<version>${org.codehaus.jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-lgpl</artifactId>
+			<version>${org.codehaus.jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-core-asl</artifactId>
+			<version>${org.codehaus.jackson.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
+			<version>${org.codehaus.jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-xc</artifactId>
 			<version>${org.codehaus.jackson.version}</version>
 		</dependency>
 
@@ -212,19 +367,30 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${org.slf4j.version}</version>
+		</dependency>
+
+		<dependency>
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
-			<version>1.1.1</version>
+			<version>${commons-logging.version}</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>commons-dbcp</groupId>
 			<artifactId>commons-dbcp</artifactId>
-			<version>20030825.184428</version>
+			<version>${commons-dbcp.version}</version>
 		</dependency>
+
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j13</artifactId>
-			<version>1.0.1</version>
+			<groupId>commons-pool</groupId>
+			<artifactId>commons-pool</artifactId>
+			<version>${commons-pool.version}</version>
 		</dependency>
+
 	</dependencies>
+	
+	<packaging>war</packaging>
 </project>
