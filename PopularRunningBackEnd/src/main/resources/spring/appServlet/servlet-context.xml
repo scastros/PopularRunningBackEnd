@@ -16,6 +16,7 @@
 		up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/css/**" location="/css/" />
 	<resources mapping="/js/libs/**" location="/js/libs/" />
+	<resources mapping="/js/app/**" location="/js/app/" />
 	<resources mapping="/img/**" location="/img/" />
 
 	<!-- Internationalization support -->

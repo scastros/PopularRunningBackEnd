@@ -39,38 +39,32 @@ public class RunningEventServiceImpl extends BaseServiceImpl implements RunningE
     
     Transaction transaction;
 
-    @Override
     public RunningEvent findById( long id )
     {
         return runningEventDao.find( id );
     }
 
-    @Override
     public List<RunningEvent> findAll()
     {
         return runningEventDao.findAll();
     }
 
-    @Override
     @Transactional
     public void save( Object runningEvent )
     {
         runningEventDao.save( (RunningEvent)runningEvent );
     }
 
-    @Override
     public void merge( Object runningEvent )
     {
         runningEventDao.merge( (RunningEvent)runningEvent );
     }
 
-    @Override
     public void remove( Object runningEvent )
     {
         runningEventDao.remove( (RunningEvent)runningEvent );
     }
 
-    @Override
 	public void flush() {
 		runningEventDao.flush();
 	}
@@ -79,7 +73,6 @@ public class RunningEventServiceImpl extends BaseServiceImpl implements RunningE
      * This is a DAO method that returns all the runningEvents with the given description.
      * If any parameter is null, that parameter is ignored. So only non-null parameters are used in defining the search criteria.
      */
-    @Override
 	public List<RunningEvent> findByName(String name) {
         return runningEventDao.search(new Search(RunningEvent.class).addFilterILike("description", name));
 	}
@@ -90,7 +83,6 @@ public class RunningEventServiceImpl extends BaseServiceImpl implements RunningE
      * @param cityId
      * @return The RunningEvents
      */
-    @Override
 	public List<RunningEvent> findByCity(long cityId) {
         return runningEventDao.search(new Search(RunningEvent.class).addFilterEqual("location", cityId));
 	}
@@ -101,7 +93,6 @@ public class RunningEventServiceImpl extends BaseServiceImpl implements RunningE
      * @param stateId
      * @return The RunningEvents
      */
-    @Override
     public List<RunningEvent> findByState(long stateId) {
     	List<City> citiesInState = cityDao.search(new Search(City.class).addFilterEqual("state", stateId));
     	return runningEventDao.search(new Search(RunningEvent.class).addFilterIn("location", citiesInState));
@@ -113,7 +104,6 @@ public class RunningEventServiceImpl extends BaseServiceImpl implements RunningE
      * @param distanceId
      * @return The RunningEvents
      */
-    @Override
     public List<RunningEvent> findByDistance(long distanceId) {
     	return runningEventDao.search(new Search(RunningEvent.class).addFilterEqual("distance", distanceId));
     }
@@ -124,7 +114,6 @@ public class RunningEventServiceImpl extends BaseServiceImpl implements RunningE
      * @param date format DD/MM/YYYY
      * @return The RunningEvents
      */
-    @Override
     public List<RunningEvent> findByDate(String date) {
     	Date givenDate = new Date();
     	try {
@@ -141,7 +130,6 @@ public class RunningEventServiceImpl extends BaseServiceImpl implements RunningE
      * @param month 
      * @return The RunningEvents
      */
-    @Override
     public List<RunningEvent> findByMonth(int month) {
     	Calendar calendar = Calendar.getInstance();
     	calendar.set(Calendar.MONTH, month);

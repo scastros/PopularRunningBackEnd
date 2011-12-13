@@ -25,37 +25,31 @@ public class DistanceServiceImpl extends BaseServiceImpl implements DistanceServ
     @Autowired
     private DistanceDAO distanceDao;
 
-    @Override
     public Distance findById( long id )
     {
         return distanceDao.find( id );
     }
 
-    @Override
     public List<Distance> findAll()
     {
         return distanceDao.findAll();
     }
 
-    @Override
     public void save( Object distance )
     {
     	distanceDao.save( (Distance)distance );
     }
 
-    @Override
     public void merge( Object distance )
     {
     	distanceDao.merge( (Distance)distance );
     }
 
-    @Override
     public void remove( Object distance )
     {
     	distanceDao.remove( (Distance)distance );
     }
 
-    @Override
 	public void flush() {
     	distanceDao.flush();
 	}
@@ -64,7 +58,6 @@ public class DistanceServiceImpl extends BaseServiceImpl implements DistanceServ
      * This is a DAO method that returns all the distances with the given description.
      * If any parameter is null, that parameter is ignored. So only non-null parameters are used in defining the search criteria.
      */
-    @Override
 	public List<Distance> findByName(String name) {
         return distanceDao.search(new Search(Distance.class).addFilterILike("description", name));
 	}
@@ -74,7 +67,6 @@ public class DistanceServiceImpl extends BaseServiceImpl implements DistanceServ
      * @param distance
      * @return Distances that meet the criteria
      */
-    @Override
 	public List<Distance> findDistancesGreatherThan(long distance) {
         return distanceDao.search(new Search(Distance.class).addFilterGreaterOrEqual("meters", distance));
 	} 
@@ -84,7 +76,6 @@ public class DistanceServiceImpl extends BaseServiceImpl implements DistanceServ
      * @param distance
      * @return Distances that meet the criteria
      */
-    @Override
 	public List<Distance> findDistancesLessThan(long distance) {
         return distanceDao.search(new Search(Distance.class).addFilterLessOrEqual("meters", distance));
 	} 	

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.popular.running.front.forms.RunningEventForm;
 import com.popular.running.model.Distance;
 import com.popular.running.model.RunningEvent;
 import com.popular.running.model.State;
@@ -48,7 +49,7 @@ public class RunningEventController {
 	public String homeForm(Model model) {
 		logger.info("Popular Running BackEnd Application");
 
-		model.addAttribute("runningEvent", new RunningEvent());
+		model.addAttribute("runningEvent", new RunningEventForm());
 
 		return "index";
 	}

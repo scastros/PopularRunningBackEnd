@@ -306,21 +306,42 @@
 			<version>${org.springframework.version}</version>
 		</dependency>
 
-		<!-- This first dependency includes all the JPA implementations for the 
-			DAOs -->
+		<!-- This first dependency includes all the JPA implementations for the DAOs -->
+		<!-- Note the remove of jpa-persistence 1.0 stuff -->
 		<dependency>
 			<groupId>com.googlecode.genericdao</groupId>
 			<artifactId>dao</artifactId>
 			<version>${com.googlecode.genericdao.version}</version>
+			<exclusions>
+        		<exclusion>
+          			<groupId>javax.persistence</groupId>
+          			<artifactId>persistence-api</artifactId>
+        		</exclusion>
+      		</exclusions> 		
 		</dependency>
-		<!-- This second one includes the Hibernate Entity Manager plugin for the 
-			framework -->
+		<!-- This second one includes the Hibernate Entity Manager plugin for the framework -->
 		<dependency>
 			<groupId>com.googlecode.genericdao</groupId>
 			<artifactId>search-jpa-hibernate</artifactId>
 			<version>${com.googlecode.genericdao.version}</version>
+			<exclusions>
+        		<exclusion>
+          			<groupId>org.hibernate</groupId>
+          			<artifactId>hibernate-annotations</artifactId>
+        		</exclusion>
+        		<exclusion>
+          			<groupId>org.hibernate</groupId>
+          			<artifactId>ejb3-persistence</artifactId>
+        		</exclusion>
+      		</exclusions> 
 		</dependency>
-
+		<!--  Including JPA-Persistence 2.0 -->
+		<dependency>
+			<groupId>org.eclipse.persistence</groupId>
+			<artifactId>javax.persistence</artifactId>
+			<version>2.0.0</version>
+		</dependency>
+		
 		<!-- Jackson JSON Mapper -->
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>

@@ -25,37 +25,31 @@ public class StateServiceImpl extends BaseServiceImpl implements StateService
     @Autowired
     private StateDAO stateDao;
 
-    @Override
     public State findById( long id )
     {
         return stateDao.find( id );
     }
 
-    @Override
     public List<State> findAll()
     {
         return stateDao.findAll();
     }
 
-    @Override
     public void save( Object state )
     {
     	stateDao.save( (State)state );
     }
 
-    @Override
     public void merge( Object state )
     {
     	stateDao.merge( (State)state );
     }
 
-    @Override
     public void remove( Object state )
     {
     	stateDao.remove( (State)state );
     }
 
-    @Override
 	public void flush() {
     	stateDao.flush();
 	}
@@ -64,7 +58,6 @@ public class StateServiceImpl extends BaseServiceImpl implements StateService
      * This is a DAO method that returns all the states with the given description.
      * If any parameter is null, that parameter is ignored. So only non-null parameters are used in defining the search criteria.
      */
-    @Override
 	public List<State> findByName(String name) {
         return stateDao.search(new Search(State.class).addFilterILike("description", name));
 	}

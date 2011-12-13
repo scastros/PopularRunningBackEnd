@@ -14,7 +14,6 @@
 
 <link rel="stylesheet" href="../../css/style.css" th:href="@{/css/style.css}"/>
 
-<script src="js/libs/modernizr-2.0.6.min.js"></script>
 </head>
 
 <body>
@@ -25,7 +24,6 @@
 			method="post">
 
 			<h1>New Popular Running Event ...</h1>
-
 
 			<fieldset id="running-event-details">
 
@@ -45,6 +43,9 @@
 				<label for="location" th:text="#{theader.location}">Location:</label> 
 				<select th:field="*{state}" style="width:282px;"> 
 					<option th:each="state : ${allStates}" th:value="${state.id}" th:text="${state.description}">State</option>
+				</select>
+				<br/>
+				<select id="cities" style="width:282px;"> 
 				</select>
 				<br/>
 				<input type="text" name="location" value="" th:value="*{location}" />
@@ -78,16 +79,15 @@
 		</footer>
 	</div>
 	<!--! end of #container -->
-	<script
-		src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-	
-		<script>
+	<script	src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+	<script type="text/javascript" charset="utf-8" src="js/libs/modernizr-2.0.6.min.js"></script>
+	<script type="text/javascript" charset="utf-8" src="js/app/RunningEventForm.js"></script>
+	<script>
 		/*<![CDATA[*/
 		      window.jQuery
 				|| document
 						.write('<script src="js/libs/jquery-1.6.2.min.js"><\/script>')     
 		/*]]>*/
 	</script>
-
 </body>
 </html>

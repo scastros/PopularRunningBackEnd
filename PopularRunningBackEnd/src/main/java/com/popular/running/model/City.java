@@ -5,15 +5,14 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -24,8 +23,8 @@ import javax.validation.constraints.Size;
  * @author scastros
  */
 @Entity
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 @Table( name = "CITY")
-@Embeddable
 public class City implements Serializable
 {
     /**
@@ -42,14 +41,10 @@ public class City implements Serializable
     @Basic(optional = false)
     @NotNull
     private long id;
-
-    //@Column( name = "STATE" )
-    @Basic(optional = false)
-    @NotNull   
-    @MapsId("state")
-    @JoinColumns({
-      @JoinColumn(name="state_fk", referencedColumnName="id")
-    }) @ManyToOne
+    
+    @NotNull
+    @JoinColumn(name = "STATE", referencedColumnName = "ID", nullable = false)
+    @ManyToOne(optional = false)
     private State state;
 
     @Column( name = "DESCRIPTION" )
@@ -74,6 +69,8 @@ public class City implements Serializable
         this.description = description;
     }
 
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+    @JoinColumn(name="STATE")
     public State getState()
     {
         return state;

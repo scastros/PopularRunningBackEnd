@@ -19,7 +19,7 @@
     <context:annotation-config/>
     
     <!-- Data Source -->
-    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+    <bean id="dataSource" class="org.apache.tomcat.dbcp.dbcp.BasicDataSource">
         <property name="driverClassName" value="${jdbc.driverClassName}" />
         <property name="url">
                <ref bean="dataBaseUrl"/>
