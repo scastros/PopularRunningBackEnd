@@ -7,11 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
-import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -53,19 +48,11 @@ public class RunningEvent implements Serializable
     @Column( name = "PICTURE" )
     private String picture;
     
-    //@Column( name = "DISTANCE" )
-    @MapsId("distance")
-    @JoinColumns({
-      @JoinColumn(name="distance_fk", referencedColumnName="id")
-    }) @OneToOne
-    private Distance distance;
+    @Column( name = "DISTANCE" )
+    private long distance;
     
-    //@Column( name = "LOCATION" )
-    @MapsId("location")
-    @JoinColumns({
-      @JoinColumn(name="city_fk", referencedColumnName="id")
-    }) @OneToOne    
-    private City location;
+    @Column( name = "LOCATION" )
+    private long location;
     
     @Length(max=2000)
     @Column( name = "DESCRIPTION" )
@@ -84,7 +71,7 @@ public class RunningEvent implements Serializable
     private String elevation;
 
 	public RunningEvent(long date, String shortName, String picture,
-			Distance distance, City location, String description,
+			long distance, long location, String description,
 			String enrollment, String map, String elevation) {
 		super();
 		this.date = date;
@@ -133,21 +120,19 @@ public class RunningEvent implements Serializable
 		this.picture = picture;
 	}
 
-	@ManyToOne
-	public Distance getDistance() {
+	public long getDistance() {
 		return distance;
 	}
 
-	public void setDistance(Distance distance) {
+	public void setDistance(long distance) {
 		this.distance = distance;
 	}
 
-	@ManyToOne
-	public City getLocation() {
+	public long getLocation() {
 		return location;
 	}
 
-	public void setLocation(City location) {
+	public void setLocation(long location) {
 		this.location = location;
 	}
 

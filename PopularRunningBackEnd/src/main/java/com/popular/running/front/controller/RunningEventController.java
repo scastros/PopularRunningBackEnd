@@ -2,6 +2,7 @@ package com.popular.running.front.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -9,12 +10,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.popular.running.front.converters.RunningConverterException;
+import com.popular.running.front.converters.RunningEventConverter;
+import com.popular.running.front.editors.CityFormEditor;
+import com.popular.running.front.editors.DistanceFormEditor;
 import com.popular.running.front.forms.RunningEventForm;
+import com.popular.running.model.City;
 import com.popular.running.model.Distance;
 import com.popular.running.model.RunningEvent;
 import com.popular.running.model.State;
@@ -40,8 +48,7 @@ public class RunningEventController {
 
     private static StateService<State> _stateService = 
     	(StateService<State>)OperationsHolder.getInstance().getStateService();
-    
-    
+
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
@@ -55,13 +62,18 @@ public class RunningEventController {
 	}
 
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)
-	public String create(@Valid @ModelAttribute("runningEvent") RunningEvent runningEvent, BindingResult result) {
+	public String create(@Valid @ModelAttribute("runningEvent") RunningEventForm runningEvent, BindingResult result) {
 
 		if (result.hasErrors()) {
 			return "index";
 		}
 
-		addNewRunningEvent(runningEvent);
+		try {
+			addNewRunningEvent(runningEvent);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "index";
+		}
 		return "redirect:/list";
 	}
 
@@ -70,7 +82,13 @@ public class RunningEventController {
 
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("list");
-		modelAndView.addObject("runningEvents", _runningEventService.findAll());
+		
+		try {
+			modelAndView.addObject("runningEvents", RunningEventConverter.toRunningEventFormList(_runningEventService.findAll()));
+		} catch (RunningConverterException e) {
+			e.printStackTrace();
+			modelAndView.setViewName("error");
+		}
 
 		return modelAndView;
 	}
@@ -84,13 +102,19 @@ public class RunningEventController {
 	public List<Object> populateStates() {
 		return _stateService.findAll();
 	}
-	
 
 	/**
 	 * Adds new Running Event to Database
 	 * @param runningEventForm
 	 */
-	private void addNewRunningEvent(RunningEvent runningEvent) {
-		_runningEventService.save(runningEvent);
+	private void addNewRunningEvent(RunningEventForm runningEventForm) throws Exception {
+		_runningEventService.save(RunningEventConverter.toRunningEvent(runningEventForm));
 	}
+	
+	@InitBinder
+	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) throws Exception
+	{       
+	      binder.registerCustomEditor(Distance.class, new DistanceFormEditor());
+	      binder.registerCustomEditor(City.class, new CityFormEditor());
+	}  
 }

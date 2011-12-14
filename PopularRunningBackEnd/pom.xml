@@ -165,12 +165,34 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
 			<version>${org.hibernate.version}</version>
+			<exclusions>
+        		<exclusion>
+          			<groupId>org.hibernate.javax.persistence</groupId>
+          			<artifactId>hibernate-jpa-2.0-api</artifactId>
+        		</exclusion>
+      		</exclusions> 		
 		</dependency>
 
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
 			<version>${org.hibernate.validator.version}</version>
+		</dependency>
+		
+		<dependency>
+    		<groupId>org.hibernate</groupId>
+    		<artifactId>hibernate-entitymanager</artifactId>
+    		<version>3.5.1-Final</version>
+    		<exclusions>
+    		    <exclusion>
+          			<groupId>org.javassist</groupId>
+          			<artifactId>javassist</artifactId>
+        		</exclusion>
+    		    <exclusion>
+          			<groupId>org.hibernate</groupId>
+          			<artifactId>hibernate-annotations</artifactId>
+        		</exclusion>
+        	</exclusions>
 		</dependency>
 
 		<dependency>
@@ -332,6 +354,14 @@
         		<exclusion>
           			<groupId>org.hibernate</groupId>
           			<artifactId>ejb3-persistence</artifactId>
+        		</exclusion>
+        		<exclusion>
+          			<groupId>org.javassist</groupId>
+          			<artifactId>javassist</artifactId>
+        		</exclusion>
+        		<exclusion>
+					<groupId>org.hibernate</groupId>
+    				<artifactId>hibernate-entitymanager</artifactId>
         		</exclusion>
       		</exclusions> 
 		</dependency>
