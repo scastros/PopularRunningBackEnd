@@ -13,6 +13,7 @@ import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 import org.codehaus.jackson.map.introspect.JacksonAnnotationIntrospector;
 import org.codehaus.jackson.xc.JaxbAnnotationIntrospector;
 
+import com.popular.running.jqgrid.JqGridProvider;
 import com.popular.running.service.resources.CityResource;
 import com.popular.running.service.resources.DistanceResource;
 import com.popular.running.service.resources.RunningEventResource;
@@ -37,10 +38,13 @@ public class PopularRunningApplication extends Application {
 		return classes;
 	}
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+	/**
+	 * Registering providers
+	 *
+	 * @return Set<Object>
+	 */
 	public Set<Object> getSingletons() {
-        Set s = new HashSet();
-        // Register the Jackson provider for JSON
+    	Set<Object> singletons = new HashSet<Object>();
         
         // Make (de)serializer use a subset of JAXB and (afterwards) Jackson annotations
         // See http://wiki.fasterxml.com/JacksonJAXBAnnotations for more information
@@ -52,14 +56,18 @@ public class PopularRunningApplication extends Application {
         mapper.getSerializationConfig().withAnnotationIntrospector(pair);
         mapper.getSerializationConfig().withSerializationInclusion(Inclusion.NON_NULL);
 
+        // Registering Providers
         JettisonJAXBProvider jettisonProvider = new JettisonJAXBProvider();
         JacksonJaxbJsonProvider jacksonProvider = new JacksonJaxbJsonProvider();
+        JqGridProvider jqGridProvider = new JqGridProvider();
         jacksonProvider.setMapper(mapper);
         jettisonProvider.setUseAsReader(true);
         jettisonProvider.setUseAsWriter(true);
-        s.add(jacksonProvider);
-        s.add(jettisonProvider);
+        
+        singletons.add(jacksonProvider);
+        singletons.add(jettisonProvider);
+        singletons.add(jqGridProvider);
 
-        return s;
+        return singletons;
     }
 }

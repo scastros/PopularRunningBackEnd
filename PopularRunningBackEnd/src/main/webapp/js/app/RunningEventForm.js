@@ -1,5 +1,4 @@
-$(document).ready(function() 
-		{	
+$(document).ready(function(){	
 	$("select#state").change(function(){
 		$("select#location").attr('class','linked_selects_waiting');
 		$.getJSON("jaxrs/PopularRunning/cities/state/"+$(this).val(), function(j){

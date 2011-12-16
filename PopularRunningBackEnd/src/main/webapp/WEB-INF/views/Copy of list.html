@@ -19,16 +19,49 @@
 </head>
 
 <body style="margin:50px 0px;padding:0px;text-align:center;">
-
-	<table id="frmac"></table> 
-	<div id="pfrmac"></div>
+	<div id="container" style="width:80%;margin:0px auto;text-align:left;padding:15px;">
+		<table id="display-data">
+			<thead>
+				<tr>
+					<th>Action</th>
+					<th th:text="#{theader.date}"></th>
+					<th th:text="#{theader.shortName}"></th>
+					<th th:text="#{theader.picture}"></th>
+					<th th:text="#{theader.distance}"></th>
+					<th th:text="#{theader.location}"></th>
+					<th th:text="#{theader.enrollment}"></th>
+					<th th:text="#{theader.map}"></th>
+					<th th:text="#{theader.elevation}"></th>
+					<th th:text="#{theader.description}"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="runninEvent : ${runningEvents}">
+					<td>
+						<div class="buttons">
+							<button>Edit</button>
+							<button>Delete</button>
+						</div>
+					</td>
+					<td th:text="${runninEvent.date}"></td>
+					<td th:text="${runninEvent.shortName}"></td>
+					<td th:text="${runninEvent.picture}"></td>
+					<td th:text="${runninEvent.distance.description}"></td>
+					<td th:text="${runninEvent.location.description}"></td>
+					<td th:text="${runninEvent.enrollment}"></td>
+					<td th:text="${runninEvent.map}"></td>
+					<td th:text="${runninEvent.elevation}"></td>
+					<td th:text="${runninEvent.description}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 	
 	<script	type="text/javascript" charset="utf-8" src="js/libs/jquery-1.6.2.min.js"></script>
 	<script	type="text/javascript" charset="utf-8" src="js/libs/jquery-ui-1.8.16.custom.min.js"></script>
 	<script type="text/javascript" charset="utf-8" src="js/libs/modernizr-2.0.6.min.js"></script>
 	<script type="text/javascript" charset="utf-8" src="js/libs/grid.locale-en.js"></script>
 	<script type="text/javascript" charset="utf-8" src="js/libs/jquery.jqGrid.min.js"></script>
-	<script type="text/javascript" charset="utf-8" src="js/app/RunningEventFormList.js"></script>
 
 </body>
 </html>

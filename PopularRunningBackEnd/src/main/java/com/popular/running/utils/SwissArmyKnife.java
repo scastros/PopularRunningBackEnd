@@ -12,7 +12,9 @@ public final class SwissArmyKnife {
 
 	public static final String[] parsers = new String [] {"dd/MM/yyyy"};
 
-
+	public static final String MEDIA_TYPE_JQGRID = "application/json_jqgrid";
+	
+	
 	// PRIVATE //
 
 	/**

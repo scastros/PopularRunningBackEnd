@@ -31,6 +31,9 @@ public final class PopularRunningURLs {
 	public static final String RUNNINGEVENT_MONTH = "month/{month}";
 	public static final String RUNNINGEVENT_CREATE = "create";
 	
+	/** RUNNINGEVENT URLs for jqGrid **/
+	public static final String RUNNINGEVENT_RUNNINGEVENTS_JQGRID = "jqgrid";
+	
 	/** GENERICS URLs **/
 	public static final String GENERIC_ID = "{id}";
 	public static final String GENERIC_NAME = "name/{name}";
@@ -48,5 +51,4 @@ public final class PopularRunningURLs {
 		// calling this actor as well :
 		throw new AssertionError();
 	}
-
 }

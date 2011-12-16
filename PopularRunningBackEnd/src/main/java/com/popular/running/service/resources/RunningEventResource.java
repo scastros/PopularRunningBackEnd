@@ -147,6 +147,20 @@ public class RunningEventResource {
     }
     
     /**
+     * Returns RunningEvents list for jqGrid
+     * 
+     * @return The RunningEvents
+     */
+    @Path(PopularRunningURLs.RUNNINGEVENT_RUNNINGEVENTS_JQGRID)
+    @GET
+    @Produces(SwissArmyKnife.MEDIA_TYPE_JQGRID)
+    public List<Object> getRunningEventsJqGrid() {
+    	List<Object> runningEvents = _runningEventService.findAll();
+    	
+    	return runningEvents;
+    }
+    
+    /**
      * Creates RunningEvent
      * 
      * @return Response with status code and object created
